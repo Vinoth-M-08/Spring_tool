@@ -1,0 +1,61 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Room;
+import com.example.demo.service.RoomService;
+
+@RestController
+public class RoomController {
+	@Autowired
+	RoomService service;
+	
+	@PostMapping("/roo")
+	public String add(@RequestBody Room room)
+	{
+		return service.addRoom(room);
+	}
+	
+	@GetMapping("/roo")
+	public List<Room> get()
+	{
+		return service.getRoom();
+	}
+	@PutMapping("/roo")
+	public String update(@RequestBody Room room)
+	{
+		return service.upadteRoom(room);
+	}
+	
+	@DeleteMapping("/roo")
+		public String delete(@RequestParam int id)
+		{
+		return service.deleteRoomById(id);
+		}
+	@GetMapping("/roo/{field}")
+	public List<Room> babyWithSort(@PathVariable String field)
+	{
+		return service.getBabySorted(field);
+	}
+	@GetMapping("/roo/{offset}/{pageSize}")
+	public List<Room> babyWithPagination(@PathVariable int offset,@PathVariable int pageSize)
+	{
+		return service.getBabyWithPagination(offset, pageSize );
+	}
+	@GetMapping("/roo/{offset}/{pageSize}/{field}")
+	public List<Room> babyWithSortingAndPagination(@PathVariable int offset,@PathVariable int pageSize,@PathVariable String field)
+	{
+		return service.getBabyWithSortingAndPagination(offset, pageSize,field );
+	}
+
+}
